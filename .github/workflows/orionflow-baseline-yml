@@ -1,4 +1,3 @@
-# Baseline build for OrionFlow evaluation
 name: OrionFlow baseline build
 
 on:
