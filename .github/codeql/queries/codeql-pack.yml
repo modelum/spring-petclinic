@@ -1,0 +1,6 @@
+# This is an automatically generated file.
+name: petclinic-rename-owner-queries
+version: 0.0.0
+dependencies:
+  codeql/java-all: "*"
+extractor: java
