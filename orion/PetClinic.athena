@@ -1,0 +1,11 @@
+Schema PetClinic:1
+
+Root entity Owner
+{
+  Common
+  {
+    ? address: String,
+    ? city: String,
+    ? telephone: String
+  }
+}
