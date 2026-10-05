@@ -34,14 +34,16 @@ jobs:
 
       - name: Extract file name from commit message
         id: extract_file
+        env:
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
         run: |
-          FILENAME="${{ github.event.head_commit.message }}"
-          echo "script=$FILENAME" >> $GITHUB_OUTPUT
+          FILENAME="$(printf '%s\n' "$COMMIT_MESSAGE" | head -n 1)"
+          echo "script=$FILENAME" >> "$GITHUB_OUTPUT"
 
           if [ -f "$FILENAME" ]; then
-            echo "run=true" >> $GITHUB_OUTPUT
+            echo "run=true" >> "$GITHUB_OUTPUT"
           else
-            echo "run=false" >> $GITHUB_OUTPUT
+            echo "run=false" >> "$GITHUB_OUTPUT"
             echo "Error: File $FILENAME mentioned in the commit does not exist"
           fi
 
