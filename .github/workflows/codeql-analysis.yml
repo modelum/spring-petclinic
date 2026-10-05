@@ -25,6 +25,13 @@ jobs:
         with:
           persist-credentials: true
 
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+
       - name: Extract file name from commit message
         id: extract_file
         run: |
