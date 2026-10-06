@@ -2,5 +2,10 @@ PetClinic_rename_owner operations
 
 USING PetClinic:1
 
+<<<<<<< HEAD
 RENAME ENTITY Owner TO Customer
+=======
+RENAME Owner::telephone TO phone
+
+>>>>>>> b5b794902ad333a06e750e0b17cfdffaf1844a06
 
