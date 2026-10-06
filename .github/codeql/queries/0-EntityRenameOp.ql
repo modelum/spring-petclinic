@@ -10,6 +10,19 @@
 import java
 import utils
 
+/**
+ * Check if the entity Owner is used in a JPQL query
+ */
+predicate usesOldEntity(StringLiteral queryValue) {
+  queryValue.getValue().regexpMatch(
+    "(?i).*\\b(FROM|UPDATE|DELETE\\s+FROM)\\s+Owner\\b.*"
+  )
+  or
+  queryValue.getValue().regexpMatch(
+    "(?i).*\\bJOIN\\s+(?:FETCH\\s+)?Owner\\b.*"
+  )
+}
+
 from Class oldEntity, Location usageLoc, string message, string newName
 where
   oldEntity.hasName("Owner") and
@@ -42,7 +55,7 @@ where
       isNamedQuery(nq) and
       isEqual(nq.getValue("name"), q.getValue("name")) and
       queryLiteral = nq.getValue("query") and
-      usesOldEntity(queryLiteral, oldEntity) and
+      usesOldEntity(queryLiteral) and
       usageLoc = q.getTarget().getLocation() and
       message =
         "Named query uses old entity name '" + oldEntity.getName() +
@@ -54,7 +67,7 @@ where
     exists(Annotation q, StringLiteral queryLiteral |
       isQuery(q) and
       queryLiteral = q.getValue("value") and
-      usesOldEntity(queryLiteral, oldEntity) and
+      usesOldEntity(queryLiteral) and
       usageLoc = q.getTarget().getLocation() and
       message =
         "Query uses old entity name '" + oldEntity.getName() +
@@ -66,7 +79,7 @@ where
     exists(MethodCall call, StringLiteral queryLiteral |
       isCreateQuery(call) and
       queryLiteral = call.getArgument(0) and
-      usesOldEntity(queryLiteral, oldEntity) and
+      usesOldEntity(queryLiteral) and
       usageLoc = call.getLocation() and
       message =
         "Call to createQuery uses old entity name '" + oldEntity.getName() +
@@ -82,7 +95,7 @@ where
       isNamedQuery(nq) and
       "\"" + nameArg.getValue() + "\"" = nq.getValue("name").toString() and
       queryLiteral = nq.getValue("query") and
-      usesOldEntity(queryLiteral, oldEntity) and
+      usesOldEntity(queryLiteral) and
       usageLoc = call.getLocation() and
       message =
         "Call to createNamedQuery uses old entity name '" + oldEntity.getName() +
