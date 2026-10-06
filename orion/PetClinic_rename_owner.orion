@@ -3,3 +3,4 @@ PetClinic_rename_owner operations
 USING PetClinic:1
 
 RENAME ATTR Owner::telephone TO phone
+
