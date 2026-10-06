@@ -220,7 +220,7 @@ Field getRelationshipField(Class sourceEntity, string relationshipTableName) {
     result = sourceEntity.getAField() and
     isRelationshipField(result) and
     exists(Annotation joinTable |
-      hasJoinTableAnnotation(result) and
+      hasJoinTableAnnotation(result, joinTable) and
       joinTable.getValue("name").toString().replaceAll("\"", "") = relationshipTableName
     )
 }
@@ -228,9 +228,7 @@ Field getRelationshipField(Class sourceEntity, string relationshipTableName) {
 /**
  * Check if a field have the @JoinTable annotation
  */
-predicate hasJoinTableAnnotation(Field field) {
-  exists(Annotation joinTable |
-    joinTable = field.getAnAnnotation() and
-    joinTable.getType().hasQualifiedName("jakarta.persistence", "JoinTable")
-  )
+predicate hasJoinTableAnnotation(Field field, Annotation joinTable) {
+  joinTable = field.getAnAnnotation() and
+  joinTable.getType().hasQualifiedName("jakarta.persistence", "JoinTable")
 }
