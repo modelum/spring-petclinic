@@ -27,7 +27,7 @@ from Class oldEntity, Location usageLoc, string message, string newName
 where
   oldEntity.hasName("Owner") and
   isEntity(oldEntity) and
-  newName = "Customer" and
+  newName = "Client" and
   (
     (
       usageLoc = oldEntity.getLocation() and
