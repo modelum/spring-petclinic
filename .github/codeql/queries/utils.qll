@@ -71,19 +71,6 @@ predicate usesField(Expr queryValue, Field field) {
   )
 }
 
-/** 
- * Check if a entity is used in a JPQL query
- */
-    predicate usesOldEntity(StringLiteral queryValue, Class parent) {
-  		queryValue.getValue().regexpMatch(
-   				 "(?i).*\\b(FROM|UPDATE|DELETE\\s+FROM)\\s+" + parent.getName() + "\\b.*"
-  		)
-  		or
- 		queryValue.getValue().regexpMatch(
-    			"(?i).*\\bJOIN\\s+(?:FETCH\\s+)?" + parent.getName() + "\\b.*"
-  		)
-}
-
 /**
  * Check if a parent entity is used in a JPQL query
  */
@@ -233,7 +220,7 @@ Field getRelationshipField(Class sourceEntity, string relationshipTableName) {
     result = sourceEntity.getAField() and
     isRelationshipField(result) and
     exists(Annotation joinTable |
-      hasJoinTableAnnotation(result) and
+      hasJoinTableAnnotation(result, joinTable) and
       joinTable.getValue("name").toString().replaceAll("\"", "") = relationshipTableName
     )
 }
@@ -241,9 +228,7 @@ Field getRelationshipField(Class sourceEntity, string relationshipTableName) {
 /**
  * Check if a field have the @JoinTable annotation
  */
-predicate hasJoinTableAnnotation(Field field) {
-  exists(Annotation joinTable |
-    joinTable = field.getAnAnnotation() and
-    joinTable.getType().hasQualifiedName("jakarta.persistence", "JoinTable")
-  )
+predicate hasJoinTableAnnotation(Field field, Annotation joinTable) {
+  joinTable = field.getAnAnnotation() and
+  joinTable.getType().hasQualifiedName("jakarta.persistence", "JoinTable")
 }
