@@ -4,7 +4,7 @@
  * @name Feature Renamed
  * @kind alert
  * @problem.severity warning
- * @id java/orion/feature-renamed/0
+ * @id java/orion/feature-renamed/1
  */
  
 import java
