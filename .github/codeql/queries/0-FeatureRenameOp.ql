@@ -11,18 +11,18 @@ import java
 import utils
 
 /**
- * Check if the field telephone from entity ATTR is used in a JPQL query
+ * Check if the field telephone from entity Owner is used in a JPQL query
  */
 predicate usesField(Expr queryValue) {
   // Reference using the fully qualified entity name
   queryValue.toString().regexpMatch(
-    "(?i).*\\bATTR\\s*\\.\\s*telephone\\b.*"
+    "(?i).*\\bOwner\\s*\\.\\s*telephone\\b.*"
   )
   or
   // Reference using an alias defined in the query
   exists(string declaredAlias, string usedAlias |
     declaredAlias = queryValue.toString().regexpCapture(
-      "(?i).*(FROM|JOIN)\\s+ATTR\\s+([a-zA-Z0-9_]+).*", 2
+      "(?i).*(FROM|JOIN)\\s+Owner\\s+([a-zA-Z0-9_]+).*", 2
     ) and
     usedAlias = queryValue.toString().regexpCapture(
       "(?i).*\\b([a-zA-Z0-9_]+)\\s*\\.\\s*telephone\\b.*", 1
@@ -33,7 +33,7 @@ predicate usesField(Expr queryValue) {
   // Implicit reference in a WHERE clause
   exists(string whereQuery |
     whereQuery = queryValue.toString() and
-    whereQuery.regexpMatch("(?i).*FROM\\s+ATTR\\b.*") and
+    whereQuery.regexpMatch("(?i).*FROM\\s+Owner\\b.*") and
     whereQuery.regexpMatch("(?i).*\\bWHERE\\b.*\\btelephone\\b.*")
   )
 }
@@ -43,7 +43,7 @@ from
   string message
 where
   isEntity(entity) and
-  entity.hasName("ATTR") and // Name entity with the field
+  entity.hasName("Owner") and // Name entity with the field
   featureField = entity.getAField() and
   featureField.hasName("telephone") and // Last field name
 
