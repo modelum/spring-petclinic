@@ -3,4 +3,3 @@ PetClinic_rename_owner operations
 USING PetClinic:1
 
 RENAME ENTITY Owner TO Customer
-
