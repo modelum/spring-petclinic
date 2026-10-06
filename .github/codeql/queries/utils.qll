@@ -71,19 +71,6 @@ predicate usesField(Expr queryValue, Field field) {
   )
 }
 
-/** 
- * Check if a entity is used in a JPQL query
- */
-    predicate usesOldEntity(StringLiteral queryValue, Class parent) {
-  		queryValue.getValue().regexpMatch(
-   				 "(?i).*\\b(FROM|UPDATE|DELETE\\s+FROM)\\s+" + parent.getName() + "\\b.*"
-  		)
-  		or
- 		queryValue.getValue().regexpMatch(
-    			"(?i).*\\bJOIN\\s+(?:FETCH\\s+)?" + parent.getName() + "\\b.*"
-  		)
-}
-
 /**
  * Check if a parent entity is used in a JPQL query
  */
