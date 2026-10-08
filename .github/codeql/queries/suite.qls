@@ -1,2 +1,2 @@
-- description: J_PET_RF_01_petclinic_rename_pet_birthdate-query-suite
+- description: J_PET_CA_01_petclinic_cast_visit_date_to_string-query-suite
 - queries: .

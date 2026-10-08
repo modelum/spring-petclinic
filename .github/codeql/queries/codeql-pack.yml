@@ -1,5 +1,5 @@
 # This is an automatically generated file.
-name: j-pet-rf-01-petclinic-rename-pet-birthdate-queries
+name: j-pet-ca-01-petclinic-cast-visit-date-to-string-queries
 version: 0.0.0
 dependencies:
   codeql/java-all: "*"
