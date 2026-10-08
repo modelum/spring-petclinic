@@ -4,28 +4,28 @@
  * @name Feature Renamed
  * @kind alert
  * @problem.severity warning
- * @id java/orion/feature-renamed/2
+ * @id java/orion/feature-renamed/0
  */
  
 import java
 import utils
 
 /**
- * Check if the field address from entity Owner is used in a JPQL query
+ * Check if the field birthDate from entity Pet is used in a JPQL query
  */
 predicate usesField(Expr queryValue) {
   // Reference using the fully qualified entity name
   queryValue.toString().regexpMatch(
-    "(?i).*\\bOwner\\s*\\.\\s*address\\b.*"
+    "(?i).*\\bPet\\s*\\.\\s*birthDate\\b.*"
   )
   or
   // Reference using an alias defined in the query
   exists(string declaredAlias, string usedAlias |
     declaredAlias = queryValue.toString().regexpCapture(
-      "(?i).*(FROM|JOIN)\\s+Owner\\s+([a-zA-Z0-9_]+).*", 2
+      "(?i).*(FROM|JOIN)\\s+Pet\\s+([a-zA-Z0-9_]+).*", 2
     ) and
     usedAlias = queryValue.toString().regexpCapture(
-      "(?i).*\\b([a-zA-Z0-9_]+)\\s*\\.\\s*address\\b.*", 1
+      "(?i).*\\b([a-zA-Z0-9_]+)\\s*\\.\\s*birthDate\\b.*", 1
     ) and
     declaredAlias = usedAlias
   )
@@ -33,8 +33,8 @@ predicate usesField(Expr queryValue) {
   // Implicit reference in a WHERE clause
   exists(string whereQuery |
     whereQuery = queryValue.toString() and
-    whereQuery.regexpMatch("(?i).*FROM\\s+Owner\\b.*") and
-    whereQuery.regexpMatch("(?i).*\\bWHERE\\b.*\\baddress\\b.*")
+    whereQuery.regexpMatch("(?i).*FROM\\s+Pet\\b.*") and
+    whereQuery.regexpMatch("(?i).*\\bWHERE\\b.*\\bbirthDate\\b.*")
   )
 }
 
@@ -43,12 +43,12 @@ from
   string message
 where
   isEntity(entity) and
-  entity.hasName("Owner") and // Name entity with the field
+  entity.hasName("Pet") and // Name entity with the field
   featureField = entity.getAField() and
-  featureField.hasName("address") and // Last field name
+  featureField.hasName("birthDate") and // Last field name
 
   oldName = featureField.getName() and
-  newName = "mainAddress" and 
+  newName = "dateOfBirth" and 
   (
     // the field will be renamed
     (usageLoc = featureField.getLocation() and
