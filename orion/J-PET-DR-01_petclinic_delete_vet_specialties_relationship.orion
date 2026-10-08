@@ -3,3 +3,4 @@ J_PET_DR_01_petclinic_delete_vet_specialties_relationship operations
 USING PetClinic:1
 
 DELETE RELATIONSHIP vet_specialties
+
