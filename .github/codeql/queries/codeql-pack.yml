@@ -1,5 +1,5 @@
 # This is an automatically generated file.
-name: j-pet-df-01-petclinic-delete-visit-description-queries
+name: j-pet-dr-01-petclinic-delete-vet-specialties-relationship-queries
 version: 0.0.0
 dependencies:
   codeql/java-all: "*"

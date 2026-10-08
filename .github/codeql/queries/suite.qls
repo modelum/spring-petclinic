@@ -1,2 +1,2 @@
-- description: J_PET_DF_01_petclinic_delete_visit_description-query-suite
+- description: J_PET_DR_01_petclinic_delete_vet_specialties_relationship-query-suite
 - queries: .
