@@ -1,0 +1,5 @@
+J_PET_RR_01_petclinic_rename_vet_specialties_relationship operations
+
+USING PetClinic:1
+
+RENAME RELATIONSHIP vet_specialties TO vet_expertise
