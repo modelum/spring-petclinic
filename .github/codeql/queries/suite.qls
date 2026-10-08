@@ -1,2 +1,2 @@
-- description: J_PET_RR_01_petclinic_rename_vet_specialties_relationship-query-suite
+- description: J_PET_RE_01_petclinic_rename_visit_to_consultation-query-suite
 - queries: .
