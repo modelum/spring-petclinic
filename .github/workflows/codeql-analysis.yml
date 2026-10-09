@@ -80,7 +80,7 @@ jobs:
 
       - name: Build PetClinic with Maven
         if: steps.extract_file.outputs.run == 'true'
-        run: ./mvnw -B package -DskipTests
+        run: ./mvnw -B compile
 
       - name: Perform CodeQL Analysis
         if: steps.extract_file.outputs.run == 'true'
