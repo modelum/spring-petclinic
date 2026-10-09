@@ -10,20 +10,7 @@
 import java
 import utils
 
-/**
-<<<<<<< HEAD
- * Check if the entity Owner is used in a JPQL query
- */
-predicate usesOldEntity(StringLiteral queryValue) {
-  queryValue.getValue().regexpMatch(
-    "(?i).*\\b(FROM|UPDATE|DELETE\\s+FROM)\\s+Owner\\b.*"
-  )
-  or
-  queryValue.getValue().regexpMatch(
-    "(?i).*\\bJOIN\\s+(?:FETCH\\s+)?Owner\\b.*"
-=======
- * Check if the entity Visit is used in a JPQL query
- */
+/** Check if entity Visit is used in a static JPQL query. */
 predicate usesOldEntity(StringLiteral queryValue) {
   queryValue.getValue().regexpMatch(
     "(?i).*\\b(FROM|UPDATE|DELETE\\s+FROM)\\s+Visit\\b.*"
@@ -31,7 +18,6 @@ predicate usesOldEntity(StringLiteral queryValue) {
   or
   queryValue.getValue().regexpMatch(
     "(?i).*\\bJOIN\\s+(?:FETCH\\s+)?Visit\\b.*"
->>>>>>> 7d3f343b9790cdf28c91eba401262daae942b20d
   )
 }
 
@@ -49,15 +35,25 @@ where
     )
 
     or
-    // Field references in other entities
-    exists(Field field |
-      field.getType().getName() = oldEntity.getName() and
-      hasJpaAssociationTo(field) and
-      usageLoc = field.getLocation() and
+    // Any source type reference resolved to the affected entity.
+    exists(TypeAccess typeReference |
+      referencesEntityType(typeReference, oldEntity) and
+      not exists(ClassInstanceExpr creation |
+        creation.getTypeName() = typeReference
+      ) and
+      usageLoc = typeReference.getLocation() and
       message =
-        "Field '" + field.getName() +
-        "' references old entity name '" + oldEntity.getName() +
-        "' which will be renamed to '" + newName + "'."
+        "Resolved type reference to entity '" + oldEntity.getName() +
+        "' must be renamed to '" + newName + "'."
+    )
+
+    or
+    exists(ClassInstanceExpr creation |
+      constructsEntity(creation, oldEntity) and
+      usageLoc = creation.getLocation() and
+      message =
+        "Construction of entity '" + oldEntity.getName() +
+        "' must use the new name '" + newName + "'."
     )
 
     or
