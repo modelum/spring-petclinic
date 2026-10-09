@@ -11,6 +11,7 @@ import java
 import utils
 
 /**
+<<<<<<< HEAD
  * Check if the entity Owner is used in a JPQL query
  */
 predicate usesOldEntity(StringLiteral queryValue) {
@@ -20,14 +21,25 @@ predicate usesOldEntity(StringLiteral queryValue) {
   or
   queryValue.getValue().regexpMatch(
     "(?i).*\\bJOIN\\s+(?:FETCH\\s+)?Owner\\b.*"
+=======
+ * Check if the entity Visit is used in a JPQL query
+ */
+predicate usesOldEntity(StringLiteral queryValue) {
+  queryValue.getValue().regexpMatch(
+    "(?i).*\\b(FROM|UPDATE|DELETE\\s+FROM)\\s+Visit\\b.*"
+  )
+  or
+  queryValue.getValue().regexpMatch(
+    "(?i).*\\bJOIN\\s+(?:FETCH\\s+)?Visit\\b.*"
+>>>>>>> 7d3f343b9790cdf28c91eba401262daae942b20d
   )
 }
 
 from Class oldEntity, Location usageLoc, string message, string newName
 where
-  oldEntity.hasName("Owner") and
+  oldEntity.hasName("Visit") and
   isEntity(oldEntity) and
-  newName = "Customer" and
+  newName = "Consultation" and
   (
     (
       usageLoc = oldEntity.getLocation() and

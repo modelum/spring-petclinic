@@ -1,5 +1,5 @@
 # This is an automatically generated file.
-name: petclinic-rename-owner-queries
+name: j-pet-re-01-petclinic-rename-visit-to-consultation-queries
 version: 0.0.0
 dependencies:
   codeql/java-all: "*"

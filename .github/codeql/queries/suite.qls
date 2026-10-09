@@ -1,2 +1,2 @@
-- description: PetClinic_rename_owner-query-suite
+- description: J_PET_RE_01_petclinic_rename_visit_to_consultation-query-suite
 - queries: .

@@ -1,0 +1,6 @@
+J_PET_DF_01_petclinic_delete_visit_description operations
+
+USING PetClinic:1
+
+DELETE Visit::description
+

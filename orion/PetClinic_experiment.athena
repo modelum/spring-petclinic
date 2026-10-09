@@ -1,0 +1,57 @@
+// Experimental subgraph for OrionFlow evaluation.
+// Source: modelum/spring-petclinic
+// This is not intended to be a full reverse-engineered schema.
+
+Schema PetClinic:1
+
+Root entity Owner
+{
+  +id: Integer,
+  firstName: String,
+  lastName: String,
+  address: String,
+  city: String,
+  telephone: String
+}
+
+Root entity PetType
+{
+  +id: Integer,
+  name: String
+}
+
+Root entity Pet
+{
+  +id: Integer,
+  name: String,
+  birthDate: Timestamp,
+  owner: ref<Owner as Integer>&,
+  type: ref<PetType as Integer>&
+}
+
+Root entity Visit
+{
+  +id: Integer,
+  date: Timestamp,
+  description: String,
+  pet: ref<Pet as Integer>&
+}
+
+Root entity Vet
+{
+  +id: Integer,
+  firstName: String,
+  lastName: String
+}
+
+Root entity Specialty
+{
+  +id: Integer,
+  name: String
+}
+
+Relationship vet_specialties
+{
+  vet_id: ref<Vet as Integer>&,
+  specialty_id: ref<Specialty as Integer>&
+}

@@ -1,0 +1,7 @@
+J_PET_RF_01_petclinic_rename_pet_birthdate operations
+
+USING PetClinic:1
+
+RENAME Pet::birthDate TO dateOfBirth
+
+
