@@ -54,7 +54,6 @@ predicate referencesEntityType(TypeAccess typeReference, Class entity) {
 
 /** A constructor expression resolved to the affected entity. */
 predicate constructsEntity(ClassInstanceExpr creation, Class entity) {
-  creation.fromSource() and
   creation.getConstructedType() = entity
 }
 
