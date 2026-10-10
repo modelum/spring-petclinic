@@ -1,2 +1,2 @@
-- description: J_PET_RE_01_petclinic_rename_visit_to_consultation-query-suite
+- description: J_PET_CA_01_petclinic_cast_visit_date_to_string-query-suite
 - queries: .
