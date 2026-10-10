@@ -3,4 +3,3 @@ J_PET_CA_01_petclinic_cast_visit_date_to_string operations
 USING PetClinic:1
 
 CAST ATTR Visit::date TO String
-
