@@ -3,4 +3,3 @@ J_PET_DE_01_petclinic_delete_pettype operations
 USING PetClinic:1
 
 DELETE ENTITY PetType
-
