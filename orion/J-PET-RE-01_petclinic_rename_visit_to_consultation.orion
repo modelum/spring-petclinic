@@ -3,4 +3,3 @@ J_PET_RE_01_petclinic_rename_visit_to_consultation operations
 USING PetClinic:1
 
 RENAME ENTITY Visit TO Consultation
-
