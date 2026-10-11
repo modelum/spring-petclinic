@@ -1,2 +1,2 @@
-- description: J_PET_CA_01_petclinic_cast_visit_date_to_string-query-suite
+- description: J_PET_DE_01_petclinic_delete_pettype-query-suite
 - queries: .
