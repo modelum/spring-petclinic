@@ -1,2 +1,2 @@
-- description: J_PET_DR_01_petclinic_delete_vet_specialties_relationship-query-suite
+- description: J_PET_RF_01_petclinic_rename_pet_birthdate-query-suite
 - queries: .
