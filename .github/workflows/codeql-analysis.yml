@@ -62,7 +62,8 @@ jobs:
           java --add-opens java.base/java.lang=ALL-UNNAMED \
                -jar .github/codeql/generator.jar \
                -i "${{ steps.extract_file.outputs.script }}" \
-               -o .github/codeql/queries
+               -o .github/codeql/queries \
+               -f jpa
 
       - name: Commit generated queries
         if: steps.extract_file.outputs.run == 'true'
