@@ -1,2 +1,2 @@
-- description: J_PET_DF_01_petclinic_delete_visit_description-query-suite
+- description: J_PET_RE_01_petclinic_rename_visit_to_consultation-query-suite
 - queries: .
