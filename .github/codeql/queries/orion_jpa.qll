@@ -37,6 +37,17 @@ predicate isJpaEntityMetadataAnnotation(Class entity, Annotation annotation) {
   (isJpaAnnotation(annotation, "Entity") or isJpaAnnotation(annotation, "Table"))
 }
 
+/**
+ * Explicit logical JPA entity name that follows the Java entity name.
+ * Marker @Entity and physical @Table mappings remain valid independently and
+ * are intentionally not emitted as duplicate entity-rename locations.
+ */
+predicate isJpaEntityRenameMetadataAnnotation(Class entity, Annotation annotation) {
+  annotation = entity.getAnAnnotation() and
+  isJpaAnnotation(annotation, "Entity") and
+  annotation.getStringValue("name") = entity.getName()
+}
+
 predicate isJpaEmbeddable(Class cls) {
   exists(Annotation annotation |
     annotation = cls.getAnAnnotation() and
@@ -65,14 +76,15 @@ predicate isJpaCreateNamedQuery(MethodCall call) {
 
 /** JPQL feature matching using static captures and semantic equality. */
 predicate jpaQueryReferencesField(Expr queryValue, Field field) {
-  exists(Class entity |
+  exists(Class entity, string queryText |
+    compileTimeStringValue(queryValue, queryText) and
     entity = field.getDeclaringType() and
     (
       exists(string referencedEntity, string referencedField |
-        referencedEntity = queryValue.toString().regexpCapture(
+        referencedEntity = queryText.regexpCapture(
           "(?i).*\\b([a-zA-Z0-9_]+)\\s*\\.\\s*([a-zA-Z0-9_]+)\\b.*", 1
         ) and
-        referencedField = queryValue.toString().regexpCapture(
+        referencedField = queryText.regexpCapture(
           "(?i).*\\b([a-zA-Z0-9_]+)\\s*\\.\\s*([a-zA-Z0-9_]+)\\b.*", 2
         ) and
         jpaEntityHasName(entity, referencedEntity) and
@@ -80,16 +92,16 @@ predicate jpaQueryReferencesField(Expr queryValue, Field field) {
       )
       or
       exists(string declaredEntity, string declaredAlias, string usedAlias, string referencedField |
-        declaredEntity = queryValue.toString().regexpCapture(
+        declaredEntity = queryText.regexpCapture(
           "(?i).*(FROM|JOIN)\\s+([a-zA-Z0-9_]+)\\s+([a-zA-Z0-9_]+).*", 2
         ) and
-        declaredAlias = queryValue.toString().regexpCapture(
+        declaredAlias = queryText.regexpCapture(
           "(?i).*(FROM|JOIN)\\s+([a-zA-Z0-9_]+)\\s+([a-zA-Z0-9_]+).*", 3
         ) and
-        usedAlias = queryValue.toString().regexpCapture(
+        usedAlias = queryText.regexpCapture(
           "(?i).*\\b([a-zA-Z0-9_]+)\\s*\\.\\s*([a-zA-Z0-9_]+)\\b.*", 1
         ) and
-        referencedField = queryValue.toString().regexpCapture(
+        referencedField = queryText.regexpCapture(
           "(?i).*\\b([a-zA-Z0-9_]+)\\s*\\.\\s*([a-zA-Z0-9_]+)\\b.*", 2
         ) and
         jpaEntityHasName(entity, declaredEntity) and
@@ -98,10 +110,10 @@ predicate jpaQueryReferencesField(Expr queryValue, Field field) {
       )
       or
       exists(string declaredEntity, string referencedField |
-        declaredEntity = queryValue.toString().regexpCapture(
+        declaredEntity = queryText.regexpCapture(
           "(?i).*FROM\\s+([a-zA-Z0-9_]+)\\b.*", 1
         ) and
-        referencedField = queryValue.toString().regexpCapture(
+        referencedField = queryText.regexpCapture(
           "(?i).*\\bWHERE\\b.*\\b([a-zA-Z0-9_]+)\\b.*", 1
         ) and
         jpaEntityHasName(entity, declaredEntity) and

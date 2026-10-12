@@ -12,6 +12,13 @@ predicate frameworkEntityMetadataAnnotation(Class entity, Annotation annotation)
   isJpaEntityMetadataAnnotation(entity, annotation)
 }
 
+/** Metadata that independently carries the logical entity name being renamed. */
+predicate frameworkEntityRenameMetadataAnnotation(
+  Class entity, Annotation annotation
+) {
+  isJpaEntityRenameMetadataAnnotation(entity, annotation)
+}
+
 predicate isFrameworkCollectionNameCall(
   MethodCall call, StringLiteral collectionName, Class entity
 ) {
@@ -22,6 +29,14 @@ predicate isFrameworkCollectionNameCall(
 
 predicate isQuery(Annotation annotation) {
   isJpaQuery(annotation)
+}
+
+predicate isJpaFrameworkQuery(Annotation annotation) {
+  isJpaQuery(annotation)
+}
+
+predicate isMongoFrameworkQuery(Annotation annotation) {
+  annotation.getType().hasQualifiedName("orionflow.disabled", "MongoQuery")
 }
 
 predicate isNamedQuery(Annotation annotation) {
