@@ -1,2 +1,2 @@
-- description: J_PET_DR_01_petclinic_delete_vet_specialties_relationship-query-suite
+- description: J_PET_CA_01_petclinic_cast_visit_date_to_string-query-suite
 - queries: .
