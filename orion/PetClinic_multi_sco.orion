@@ -11,4 +11,3 @@ DELETE Consultation::notes
 // Relationship lineage
 RENAME RELATIONSHIP vet_specialties TO vet_expertise
 DELETE RELATIONSHIP vet_expertise
-
