@@ -1,0 +1,13 @@
+PetClinic_multi_sco operations
+
+USING PetClinic:1
+
+// Entity and feature lineage
+RENAME ENTITY Visit TO Consultation
+RENAME Consultation::description TO notes
+CAST ATTR Consultation::date TO String
+DELETE Consultation::notes
+
+// Relationship lineage
+RENAME RELATIONSHIP vet_specialties TO vet_expertise
+DELETE RELATIONSHIP vet_expertise
