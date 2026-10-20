@@ -4,7 +4,7 @@
  * @name Relationship Renamed
  * @kind alert
  * @problem.severity warning
- * @id java/orion/relationship-renamed/0
+ * @id java/orion/relationship-renamed/4
  */
  
 import java

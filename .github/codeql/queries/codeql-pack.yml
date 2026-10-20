@@ -1,5 +1,5 @@
 # This is an automatically generated file.
-name: j-pet-rr-01-petclinic-rename-vet-specialties-relationship-queries
+name: petclinic-multi-sco-queries
 version: 0.0.0
 dependencies:
   codeql/java-all: "*"

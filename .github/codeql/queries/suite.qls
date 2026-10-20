@@ -1,2 +1,2 @@
-- description: J_PET_RR_01_petclinic_rename_vet_specialties_relationship-query-suite
+- description: PetClinic_multi_sco-query-suite
 - queries: .
